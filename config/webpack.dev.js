@@ -3,11 +3,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin")
 const ErrorOverlayPlugin = require('error-overlay-webpack-plugin')
 const merge = require('webpack-merge')
 const webpackCommonConfig = require('./webpack.common')
+const path = require('path')
 
 module.exports = merge(webpackCommonConfig, {
   plugins: [
     new HtmlWebpackPlugin({
-      title: "Webpack demo",
+      title: "webpack-boilerplate",
+      template: path.resolve(__dirname,'../src/template/index.html'),
+      minify: true
     }),
     new ErrorOverlayPlugin(),
     new webpack.NamedModulesPlugin(),

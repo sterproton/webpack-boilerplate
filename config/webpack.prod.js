@@ -13,9 +13,6 @@ module.exports = merge(webpackCommonConfig, {
       root: path.resolve(__dirname, '../'),
       verbose: true
     }),
-    new HtmlWebpackPlugin({
-      title: "Webpack demo",
-    }),
     new ExtractTextPlugin({
       allChunks: true,
       filename: "css/[name].css"
@@ -25,7 +22,12 @@ module.exports = merge(webpackCommonConfig, {
         nodir: true
       }),
       minimize: true
-    })
+    }),
+    new HtmlWebpackPlugin({
+      title: "webpack-boilerplate",
+      template: path.resolve(__dirname, '../src/template/index.html'),
+      minify: true,
+    }),
   ],
   module: {
     rules: [{
@@ -33,11 +35,11 @@ module.exports = merge(webpackCommonConfig, {
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [{
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          },
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+              }
+            },
             {
               loader: "postcss-loader",
               options: {
