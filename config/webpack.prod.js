@@ -21,7 +21,10 @@ module.exports = merge(webpackCommonConfig, {
       filename: "css/[name].css"
     }),
     new PurifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname,"../src/*.js"))
+      paths: glob.sync(path.join(__dirname, "../src/*.js"), {
+        nodir: true
+      }),
+      minimize: true
     })
   ],
   module: {
@@ -29,7 +32,12 @@ module.exports = merge(webpackCommonConfig, {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: ['css-loader',
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          },
             {
               loader: "postcss-loader",
               options: {
@@ -45,11 +53,11 @@ module.exports = merge(webpackCommonConfig, {
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
           use: [{
-            loader: 'css-loader',
-            options: {
-              minimize: true
-            }
-          },
+              loader: 'css-loader',
+              options: {
+                minimize: true
+              }
+            },
             {
               loader: "postcss-loader",
               options: {
