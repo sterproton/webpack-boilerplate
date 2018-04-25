@@ -4,6 +4,8 @@ const webpackCommonConfig = require('./webpack.common')
 const ExtractTextPlugin = require("extract-text-webpack-plugin")
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path')
+const PurifyCSSPlugin = require("purifycss-webpack")
+const glob = require('glob')
 
 module.exports = merge(webpackCommonConfig, {
   plugins: [
@@ -17,6 +19,9 @@ module.exports = merge(webpackCommonConfig, {
     new ExtractTextPlugin({
       allChunks: true,
       filename: "css/[name].css"
+    }),
+    new PurifyCSSPlugin({
+      paths: glob.sync(path.join(__dirname,"../src/*.js"))
     })
   ],
   module: {
@@ -39,7 +44,12 @@ module.exports = merge(webpackCommonConfig, {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
           fallback: "style-loader",
-          use: ["css-loader",
+          use: [{
+            loader: 'css-loader',
+            options: {
+              minimize: true
+            }
+          },
             {
               loader: "postcss-loader",
               options: {
