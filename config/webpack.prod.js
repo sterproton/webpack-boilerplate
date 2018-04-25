@@ -7,8 +7,8 @@ const path = require('path')
 
 module.exports = merge(webpackCommonConfig, {
   plugins: [
-    new CleanWebpackPlugin(['dist'],{
-      root: path.resolve(__dirname,'../'),
+    new CleanWebpackPlugin(['dist'], {
+      root: path.resolve(__dirname, '../'),
       verbose: true
     }),
     new HtmlWebpackPlugin({
@@ -21,20 +21,35 @@ module.exports = merge(webpackCommonConfig, {
   ],
   module: {
     rules: [{
-      test: /\.scss$/,
-      use: ExtractTextPlugin.extract({
-        fallback: "style-loader",
-        use: ['css-loader',
-          {
-            loader: "postcss-loader",
-            options: {
-              plugins: () => [require("autoprefixer")()]
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ['css-loader',
+            {
+              loader: "postcss-loader",
+              options: {
+                plugins: () => [require("autoprefixer")()]
+              },
             },
-          },
-          'sass-loader'
-        ]
-      })
-    }]
+            'sass-loader'
+          ]
+        })
+      },
+      {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader",
+            {
+              loader: "postcss-loader",
+              options: {
+                plugins: () => [require("autoprefixer")()]
+              },
+            }
+          ]
+        })
+      }
+    ]
   },
   mode: "production",
 })
