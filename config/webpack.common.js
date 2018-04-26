@@ -1,6 +1,4 @@
 const path = require('path')
-const HtmlWebpackPlugin = require("html-webpack-plugin")
-
 const rootPath = path.resolve(__dirname)
 const entryPath = path.resolve(rootPath, "../src/index.jsx")
 const outputPath = path.resolve(rootPath, "../dist")

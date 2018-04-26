@@ -6,9 +6,23 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 const path = require('path')
 const PurifyCSSPlugin = require("purifycss-webpack")
 const glob = require('glob')
+const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin")
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 
 module.exports = merge(webpackCommonConfig, {
   optimization:{
+    minimize: true,
+    minimizer: [new UglifyWebpackPlugin({
+      sourceMap: true,
+      uglifyOptions: {
+        ecma: 8,
+        compress: {
+          warnings: true,
+          drop_debugger: true,
+          drop_console: true
+        }
+      }
+    })],
     splitChunks: {
       cacheGroups: {
         //将导入的npm package设为vender
@@ -34,6 +48,18 @@ module.exports = merge(webpackCommonConfig, {
         return getPath('css/[name].css').replace('css/js','css')
       }
     }),
+    new OptimizeCSSAssetsPlugin({
+      cssProcessor: require("cssnano"),
+      cssProcessorOptions: {
+        discardComments: {
+          removeAll: true,
+        },
+        // Run cssnano in safe mode to avoid
+        // potentially unsafe transformations.
+        safe: true,
+      },
+      canPrint: false,
+    }),
     //去除绝大多数多余的css规则，glob里设置需要被purify的组件的路径
     new PurifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "../src/*.js"), {
@@ -44,7 +70,10 @@ module.exports = merge(webpackCommonConfig, {
     new HtmlWebpackPlugin({
       title: "webpack-boilerplate",
       template: path.resolve(__dirname, '../src/template/index.html'),
-      minify: true,
+      minify: { //压缩HTML文件
+        removeComments: true, //移除HTML中的注释
+        collapseWhitespace: true //删除空白符与换行符
+      }
     }),
   ],
   module: {

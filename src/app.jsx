@@ -1,3 +1,4 @@
+import 'purecss'
 import React, { Component } from 'react'
 import './scss/index.scss'
 import Info from './components/Info'
