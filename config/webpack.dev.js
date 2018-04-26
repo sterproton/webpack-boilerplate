@@ -6,15 +6,25 @@ const webpackCommonConfig = require('./webpack.common')
 const path = require('path')
 
 module.exports = merge(webpackCommonConfig, {
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "js/public/vender",
+          chunks: "initial",
+        },
+      },
+    }
+  },
   plugins: [
+    new ErrorOverlayPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       title: "webpack-boilerplate",
-      template: path.resolve(__dirname,'../src/template/index.html'),
+      template: path.resolve(__dirname, '../src/template/index.html'),
       minify: true
     }),
-    new ErrorOverlayPlugin(),
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
   ],
   devServer: {
     stats: "errors-only",
@@ -26,7 +36,12 @@ module.exports = merge(webpackCommonConfig, {
   module: {
     rules: [{
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader',
+        use: ['style-loader', {
+            loader: 'css-loader',
+            options: {
+              minimize: true,
+            }
+          },
           {
             loader: "postcss-loader",
             options: {
@@ -39,13 +54,13 @@ module.exports = merge(webpackCommonConfig, {
       {
         test: /\.css$/,
         use: ['style-loader', 'css-loader',
-        {
-          loader: "postcss-loader",
-          options: {
-            plugins: () => [require("autoprefixer")()]
-          },
-        }
-      ]
+          {
+            loader: "postcss-loader",
+            options: {
+              plugins: () => [require("autoprefixer")()]
+            },
+          }
+        ]
       }
     ]
   },

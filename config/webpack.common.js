@@ -2,13 +2,13 @@ const path = require('path')
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 
 const rootPath = path.resolve(__dirname)
-const entryPath = path.resolve(rootPath, "../src/index.js")
+const entryPath = path.resolve(rootPath, "../src/index.jsx")
 const outputPath = path.resolve(rootPath, "../dist")
 const srcPath = path.resolve(rootPath, "../src")
 
 module.exports = {
   entry: {
-    index: entryPath
+    "js/index": entryPath
   },
   output: {
     path: outputPath,
@@ -18,13 +18,16 @@ module.exports = {
   module: {
     rules: [{
       test: /\.(png|jpe?g|gif|svg)$/i,
-      use: [{
+      use: [
+        //如果img大小小于limit将inline img，超出limit则隐式fallback到 file-loader
+        {
           loader: 'url-loader',
           options: {
-            limit: 1000,
+            limit: 3000,
             name: 'imgs/[hash:8].[ext]',
           }
         },
+        //压缩图片，选项里可设置质量
         {
           loader: 'image-webpack-loader',
           options: {
@@ -49,7 +52,7 @@ module.exports = {
         loader: 'url-loader',
         options: {
           // Limit at 50k. Above that it emits separate files
-          limit: 50000,
+          limit: 5000,
 
           // url-loader sets mimetype if it's passed.
           // Without this it derives it from the file extension
@@ -60,5 +63,8 @@ module.exports = {
         },
       }
     }, ],
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   }
 };

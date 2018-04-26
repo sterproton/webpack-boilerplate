@@ -8,15 +8,33 @@ const PurifyCSSPlugin = require("purifycss-webpack")
 const glob = require('glob')
 
 module.exports = merge(webpackCommonConfig, {
+  optimization:{
+    splitChunks: {
+      cacheGroups: {
+        //将导入的npm package设为vender
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "js/public/vender",
+          chunks: "initial",
+        },
+      },
+    }
+  },
   plugins: [
+    //在build前清理原来build出的dist
     new CleanWebpackPlugin(['dist'], {
       root: path.resolve(__dirname, '../'),
       verbose: true
     }),
+    //将webpack默认inline CSS改为提取单独的CSS文件
     new ExtractTextPlugin({
       allChunks: true,
-      filename: "css/[name].css"
+      //修改css文件输出的路径(可选)
+      filename: (getPath) => {
+        return getPath('css/[name].css').replace('css/js','css')
+      }
     }),
+    //去除绝大多数多余的css规则，glob里设置需要被purify的组件的路径
     new PurifyCSSPlugin({
       paths: glob.sync(path.join(__dirname, "../src/*.js"), {
         nodir: true
