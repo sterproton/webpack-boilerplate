@@ -6,17 +6,6 @@ const webpackCommonConfig = require('./webpack.common')
 const path = require('path')
 
 module.exports = merge(webpackCommonConfig, {
-  optimization: {
-    splitChunks: {
-      cacheGroups: {
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "js/public/vender",
-          chunks: "initial",
-        },
-      },
-    }
-  },
   plugins: [
     new ErrorOverlayPlugin(),
     new webpack.HotModuleReplacementPlugin(),

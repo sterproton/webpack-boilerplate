@@ -24,16 +24,6 @@ module.exports = merge(webpackCommonConfig, {
         }
       }
     })],
-    splitChunks: {
-      cacheGroups: {
-        //将导入的npm package设为vender
-        commons: {
-          test: /[\\/]node_modules[\\/]/,
-          name: "js/public/vender",
-          chunks: "initial",
-        },
-      },
-    },
     runtimeChunk: {
       name: "manifest",
     },

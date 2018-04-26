@@ -3,6 +3,7 @@ const rootPath = path.resolve(__dirname)
 const entryPath = path.resolve(rootPath, "../src/index.jsx")
 const outputPath = path.resolve(rootPath, "../dist")
 const srcPath = path.resolve(rootPath, "../src")
+// const HappyPack = require("happypack")
 
 module.exports = {
   entry: {
@@ -14,6 +15,27 @@ module.exports = {
     publicPath: "/",
     chunkFilename: "[name].[chunkhash:5].js"
   },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        commons: {
+          test: /[\\/]node_modules[\\/]/,
+          name: "js/public/vender",
+          chunks: "initial",
+        },
+      },
+    }
+  },
+  // plugins: [
+  //   new HappyPack({
+  //     id: 'jsx',
+  //     threads: 4,
+  //     loaders: [
+  //       'babel-loader',
+  //       'eslint-loader'
+  //     ],
+  //   })
+  // ],
   module: {
     rules: [{
       test: /\.(png|jpe?g|gif|svg)$/i,
@@ -38,7 +60,7 @@ module.exports = {
       test: /\.(js|jsx)$/,
       include: path.resolve(__dirname, '../src'),
       exclude: /node_modules/,
-      use: ['babel-loader','eslint-loader']
+      use: ['babel-loader', 'eslint-loader'],
     }, {
       test: /\.json$/,
       use: 'json-loader'

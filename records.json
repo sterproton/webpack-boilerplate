@@ -19,7 +19,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          0
+          1
         ]
       }
     }
@@ -44,7 +44,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          0
+          1
         ]
       }
     }
@@ -65,7 +65,7 @@
         "byName": {},
         "bySource": {},
         "usedIds": [
-          0
+          1
         ]
       }
     }
@@ -95,7 +95,12 @@
       "node_modules/react-dom/cjs/react-dom.production.min.js": 20,
       "node_modules/react-dom/index.js": 21,
       "node_modules/react/cjs/react.production.min.js": 22,
-      "node_modules/babel-loader/lib/index.js!node_modules/eslint-loader/index.js!src/index.jsx": 23
+      "node_modules/babel-loader/lib/index.js!node_modules/eslint-loader/index.js!src/index.jsx": 23,
+      "node_modules/happypack/loader.js?id=jsx!src/components/Lazy.jsx": 1,
+      "node_modules/happypack/loader.js?id=jsx!src/components/lazy2.jsx": 6,
+      "node_modules/happypack/loader.js?id=jsx!src/components/Info.jsx": 10,
+      "node_modules/happypack/loader.js?id=jsx!src/app.jsx": 13,
+      "node_modules/happypack/loader.js?id=jsx!src/index.jsx": 23
     },
     "usedIds": {
       "0": 0,
@@ -131,7 +136,8 @@
       "js/index": 3
     },
     "bySource": {
-      "0 node_modules/babel-loader/lib/index.js!node_modules/eslint-loader/index.js!src/app.jsx ./components/Lazy.jsx": 0
+      "0 node_modules/babel-loader/lib/index.js!node_modules/eslint-loader/index.js!src/app.jsx ./components/Lazy.jsx": 0,
+      "0 node_modules/happypack/loader.js?id=jsx!src/app.jsx ./components/Lazy.jsx": 4
     },
     "usedIds": [
       0,
