@@ -2,6 +2,7 @@ import 'purecss'
 import React, { Component } from 'react'
 import './scss/index.scss'
 import Info from './components/Info'
+import Lazy2 from './components/lazy2'
 
 class App extends Component {
   state = {
@@ -49,6 +50,7 @@ class App extends Component {
         <Info {...this.info} />
         <button onClick={this.toggleLazy} >toggle lazy component</button>
         <div className="lazy-component">{this.state.lazyComponent}</div>
+        <Lazy2 />
       </div>
     )
   }

@@ -10,6 +10,7 @@ const UglifyWebpackPlugin = require("uglifyjs-webpack-plugin")
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin")
 
 module.exports = merge(webpackCommonConfig, {
+  recordsPath: path.join(__dirname, "../records.json"),
   optimization:{
     minimize: true,
     minimizer: [new UglifyWebpackPlugin({
@@ -32,7 +33,10 @@ module.exports = merge(webpackCommonConfig, {
           chunks: "initial",
         },
       },
-    }
+    },
+    runtimeChunk: {
+      name: "manifest",
+    },
   },
   plugins: [
     //在build前清理原来build出的dist
@@ -45,7 +49,7 @@ module.exports = merge(webpackCommonConfig, {
       allChunks: true,
       //修改css文件输出的路径(可选)
       filename: (getPath) => {
-        return getPath('css/[name].css').replace('css/js','css')
+        return getPath('css/[name].[hash].css').replace('css/js','css')
       }
     }),
     new OptimizeCSSAssetsPlugin({
