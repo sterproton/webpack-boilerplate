@@ -6,6 +6,7 @@ const webpackCommonConfig = require('./webpack.common')
 const path = require('path')
 
 module.exports = merge(webpackCommonConfig, {
+  devtool: 'source-map',
   plugins: [
     new ErrorOverlayPlugin(),
     new webpack.HotModuleReplacementPlugin(),

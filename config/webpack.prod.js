@@ -54,12 +54,16 @@ module.exports = merge(webpackCommonConfig, {
       },
       canPrint: false,
     }),
-    //去除绝大多数多余的css规则，glob里设置需要被purify的组件的路径
+    // 去除绝大多数多余的css规则，glob里设置需要被purify的组件的路径 //可能导致去除掉不希望
     new PurifyCSSPlugin({
-      paths: glob.sync(path.join(__dirname, "../src/*.js"), {
+      paths: glob.sync(path.join(__dirname, "../src/**/*.js"), {
         nodir: true
       }),
-      minimize: true
+      minimize: true,
+      purifyOptions: {
+        rejected: true
+      },
+      styleExtensions: [path.resolve(__dirname,'../src/assets/scss/global.scss')]
     }),
     new HtmlWebpackPlugin({
       title: "webpack-boilerplate",

@@ -1,10 +1,10 @@
-import 'purecss'
 import React, { Component } from 'react'
-import './scss/index.scss'
-import Info from './components/Info'
-import Lazy2 from './components/lazy2'
+import '../assets/scss/index.scss'
+import '../assets/scss/global.scss'
+import Info from './Info'
+import Counter from './Counter'
 
-class App extends Component {
+class Home extends Component {
   state = {
     greeting: null,
     lazyComponent: null,
@@ -13,10 +13,10 @@ class App extends Component {
 
   async componentDidMount() {
     const res = await 'hello'
-    this.transInfo(res)
+    this.greeting(res)
   }
 
-  transInfo = (info) => {
+  greeting = (info) => {
     this.setState({
       greeting: info,
     })
@@ -30,10 +30,10 @@ class App extends Component {
 
   toggleLazy = async () => {
     if (!this.state.hasLazy) {
-      const component = await import('./components/Lazy.jsx')
+      const LazyComponent = (await import('./Lazy.jsx')).default // 这里是由于webpack 4将
       this.setState(prev => ({
         hasLazy: !prev.hasLazy,
-        lazyComponent: component.default(),
+        lazyComponent: LazyComponent,
       }))
     } else {
       this.setState(prev => ({
@@ -45,15 +45,15 @@ class App extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="home">
         this is a greeting: {this.state.greeting}
         <Info {...this.info} />
         <button onClick={this.toggleLazy} >toggle lazy component</button>
         <div className="lazy-component">{this.state.lazyComponent}</div>
-        <Lazy2 />
+        <Counter />
       </div>
     )
   }
 }
 
-export default App
+export default Home

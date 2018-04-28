@@ -7,7 +7,6 @@
     }],
     "react"],
     "plugins": [
-      "add-module-exports",
       "transform-class-properties",
       "syntax-dynamic-import"
     ]
