@@ -49,12 +49,12 @@ module.exports = {
           }
         },
         //压缩图片，选项里可设置质量
-        {
-          loader: 'image-webpack-loader',
-          options: {
-            bypassOnDebug: true
-          }
-        }
+        // {
+        //   loader: 'image-webpack-loader',
+        //   options: {
+        //     bypassOnDebug: true
+        //   }
+        // }
       ]
     }, {
       test: /\.(js|jsx)$/,
