@@ -1,7 +1,7 @@
 import React from 'react'
 import reactDom from 'react-dom'
-import Route from './router/router'
 import { Provider } from 'react-redux'
+import Route from './router/router'
 import store from './redux/store'
 
 const app = document.getElementById('app')
